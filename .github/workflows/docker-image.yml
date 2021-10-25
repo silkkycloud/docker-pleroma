@@ -41,6 +41,6 @@ jobs:
           file: ./Dockerfile
           push: true
           platforms: linux/amd64
-          tags: ghcr.io/silkkycloud/pleroma-test:latest
+          tags: ghcr.io/silkkycloud/pleroma:latest
           cache-from: type=local,src=cache
           cache-to: type=local,dest=cache
