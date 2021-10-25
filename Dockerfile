@@ -13,7 +13,7 @@ FROM alpine:edge as build-malloc
 ARG HARDENED_MALLOC_VERSION
 ARG CONFIG_NATIVE=false
 
-RUN apk --no-cache add build-base git gnupg && cd /tmp \
+RUN apk --no-cache add build-base git libstdc++ libgcc gnupg && cd /tmp \
     && wget -q https://github.com/thestinger.gpg && gpg --import thestinger.gpg \
     && git clone --depth 1 --branch ${HARDENED_MALLOC_VERSION} https://github.com/GrapheneOS/hardened_malloc \
     && cd hardened_malloc && git verify-tag $(git describe --tags) \
@@ -40,6 +40,8 @@ RUN apk --no-cache add \
     ca-certificates \
     ffmpeg \
     file \
+    libstdc++ \
+    libgcc \
     git \
     bash \
     musl-dev \
