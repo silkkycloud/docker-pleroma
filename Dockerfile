@@ -21,6 +21,7 @@ RUN apk --no-cache add build-base git gnupg && cd /tmp \
 
 ### Build Pleroma (production environment)
 FROM alpine:edge as pleroma
+SHELL ["/bin/bash", "-c"]
 
 COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
 
@@ -43,6 +44,7 @@ RUN apk --no-cache add \
     git \
     icu-libs \
     libidn \
+    bash \
     gcc \
     g++ \
     musl-dev \
@@ -62,15 +64,13 @@ RUN apk --no-cache add \
     libpq \
     openssl \
     protobuf \
-    s6 \
     tzdata \
-    yaml \
-    readline \
-    gcompat \
+    readline 
     # Install build dependencies
     RUN apk --no-cache add -t build-dependencies \
     build-base \
     icu-dev \
+    bash \
     libidn-dev \
     libtool \
     unzip \
