@@ -54,7 +54,7 @@ RUN apk --no-cache add \
     cmake \ 
     file-dev \
     unzip \
-    openssl \
+    openssl
     # Install build dependencies
     RUN apk --no-cache add -t build-dependencies \
     build-base \
