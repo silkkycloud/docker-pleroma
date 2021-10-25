@@ -60,6 +60,7 @@ RUN apk --no-cache add \
     cmake \ 
     file-dev\
     libxml2 \
+    unzip \
     libxslt \
     libpq \
     openssl \
@@ -75,6 +76,7 @@ RUN apk --no-cache add \
     icu-dev \
     libidn-dev \
     libtool \
+    unzip \
     libxml2-dev \
     elixir \
     erlang \
@@ -96,6 +98,7 @@ RUN apk --no-cache add \
 # Install Pleroma
 && git clone -b develop https://git.pleroma.social/pleroma/pleroma.git /pleroma \
     && git checkout ${PLEROMA_VER} 
+# Config
 RUN echo "import Mix.Config" > config/prod.secret.exs \
     && mix local.hex --force \
     && mix local.rebar --force \
@@ -111,7 +114,12 @@ COPY ./config.exs /etc/pleroma/config.exs
     && mkdir -p ${DATA}/uploads \
     && mkdir -p ${DATA}/static \
     && chown -R pleroma ${DATA}
-    
+# Drop the bash script
+COPY *.sh /pleroma
+# Get Soapbox
+ADD https://gitlab.com/api/v4/projects/17765635/jobs/artifacts/develop/download?job=build-production /tmp/soapbox-fe.zip
+RUN chown pleroma /tmp/soapbox-fe.zip
+
 ENTRYPOINT ["/sbin/tini", "--"]
 
 STOPSIGNAL SIGTERM
@@ -121,4 +129,4 @@ HEALTHCHECK \
     --interval=5m \
     CMD curl --fail http://localhost:4000/api/v1/instance || exit 1
 
-CMD [ "/pleroma/docker-entrypoint.sh" ]
+CMD [ "/pleroma/run-pleroma.sh" ]
