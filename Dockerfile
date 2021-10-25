@@ -14,10 +14,10 @@ ARG HARDENED_MALLOC_VERSION
 ARG CONFIG_NATIVE=false
 
 RUN apk --no-cache add build-base git gnupg && cd /tmp \
- && wget -q https://github.com/thestinger.gpg && gpg --import thestinger.gpg \
- && git clone --depth 1 --branch ${HARDENED_MALLOC_VERSION} https://github.com/GrapheneOS/hardened_malloc \
- && cd hardened_malloc && git verify-tag $(git describe --tags) \
- && make CONFIG_NATIVE=${CONFIG_NATIVE}
+    && wget -q https://github.com/thestinger.gpg && gpg --import thestinger.gpg \
+    && git clone --depth 1 --branch ${HARDENED_MALLOC_VERSION} https://github.com/GrapheneOS/hardened_malloc \
+    && cd hardened_malloc && git verify-tag $(git describe --tags) \
+    && make CONFIG_NATIVE=${CONFIG_NATIVE}
 
 ### Build Pleroma (production environment)
 FROM alpine:edge as pleroma
@@ -67,8 +67,8 @@ RUN apk --no-cache add \
     yaml \
     readline \
     gcompat \
-# Install build dependencies
- && apk --no-cache add -t build-dependencies \
+    # Install build dependencies
+    RUN apk --no-cache add -t build-dependencies \
     build-base \
     icu-dev \
     libidn-dev \
