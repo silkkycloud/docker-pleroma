@@ -111,11 +111,11 @@ RUN chown pleroma /tmp/soapbox-fe.zip
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
-STOPSIGNAL SIGTERM
+#STOPSIGNAL SIGTERM
 
-HEALTHCHECK \
-    --start-period=2m \
-    --interval=5m \
-    CMD curl --fail http://localhost:4000/api/v1/instance || exit 1
+#HEALTHCHECK \
+#    --start-period=2m \
+#    --interval=5m \
+#    CMD curl --fail http://localhost:4000/api/v1/instance || exit 1
 
 CMD [ "/pleroma/run-pleroma.sh" ]
