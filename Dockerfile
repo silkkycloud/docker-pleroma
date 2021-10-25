@@ -10,7 +10,7 @@ ARG GID=991
 # ---------------------------------------------------
 ### Build Hardened Malloc
 ARG ALPINE_VERSION
-FROM alpine:${ALPINE_VERSION} as build-malloc
+FROM alpine:$ALPINE_VERSION as build-malloc
 
 ARG HARDENED_MALLOC_VERSION
 ARG CONFIG_NATIVE=false
@@ -23,7 +23,7 @@ RUN apk --no-cache add build-base git gnupg && cd /tmp \
 
 ### Build Pleroma (production environment)
 ARG ALPINE_VERSION
-FROM alpine:${ALPINE_VERSION} as pleroma
+FROM alpine:$ALPINE_VERSION as pleroma
 
 COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
 
@@ -97,7 +97,7 @@ RUN apk --no-cache add \
     protobuf-dev
 # Install Pleroma
 RUN git clone -b develop https://git.pleroma.social/pleroma/pleroma.git /pleroma \
-    && git checkout ${PLEROMA_VER} 
+    && git checkout $PLEROMA_VER 
 # Config
 RUN echo "import Mix.Config" > config/prod.secret.exs \
     && mix local.hex --force \
@@ -107,7 +107,7 @@ RUN echo "import Mix.Config" > config/prod.secret.exs \
     && mix release --path /pleroma
 COPY ./config.exs /etc/pleroma/config.exs
 # Prepare pleroma user
-RUN adduser -g ${GID} -u ${UID} --disabled-password --gecos "" pleroma
+RUN adduser -g $GID -u $UID --disabled-password --gecos "" pleroma
 RUN chown -R pleroma:pleroma /pleroma \
     && mkdir -p /etc/pleroma \
     && chown -R pleroma /etc/pleroma \
