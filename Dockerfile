@@ -94,9 +94,9 @@ RUN apk --no-cache add \
     file-dev\
     libxslt-dev \
     postgresql-dev \
-    protobuf-dev \
+    protobuf-dev
 # Install Pleroma
-&& git clone -b develop https://git.pleroma.social/pleroma/pleroma.git /pleroma \
+RUN git clone -b develop https://git.pleroma.social/pleroma/pleroma.git /pleroma \
     && git checkout ${PLEROMA_VER} 
 # Config
 RUN echo "import Mix.Config" > config/prod.secret.exs \
@@ -107,7 +107,7 @@ RUN echo "import Mix.Config" > config/prod.secret.exs \
     && mix release --path /pleroma
 COPY ./config.exs /etc/pleroma/config.exs
 # Prepare pleroma user
- && adduser -g ${GID} -u ${UID} --disabled-password --gecos "" pleroma \
+RUN adduser -g ${GID} -u ${UID} --disabled-password --gecos "" pleroma \
  && chown -R pleroma:pleroma /pleroma
  && mkdir -p /etc/pleroma \
     && chown -R pleroma /etc/pleroma \
