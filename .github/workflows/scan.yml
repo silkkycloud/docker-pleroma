@@ -4,6 +4,7 @@ on:
   schedule:
     # Scan the image regularly (once a day)
     - cron: '45 02 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
