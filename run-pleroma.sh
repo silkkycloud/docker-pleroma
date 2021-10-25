@@ -19,4 +19,4 @@ if [ "${USE_SOAPBOX:-n}" = "y" ]; then
   rm /tmp/soapbox-fe.zip
 fi
 
-exec pleroma start
+exec ./pleroma start
