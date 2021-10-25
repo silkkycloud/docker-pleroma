@@ -107,9 +107,9 @@ RUN echo "import Mix.Config" > config/prod.secret.exs \
     && mix release --path /pleroma
 COPY ./config.exs /etc/pleroma/config.exs
 # Prepare pleroma user
-RUN adduser -g ${GID} -u ${UID} --disabled-password --gecos "" pleroma \
- && chown -R pleroma:pleroma /pleroma
- && mkdir -p /etc/pleroma \
+RUN adduser -g ${GID} -u ${UID} --disabled-password --gecos "" pleroma
+RUN chown -R pleroma:pleroma /pleroma \
+    && mkdir -p /etc/pleroma \
     && chown -R pleroma /etc/pleroma \
     && mkdir -p ${DATA}/uploads \
     && mkdir -p ${DATA}/static \
