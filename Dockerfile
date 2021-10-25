@@ -1,4 +1,5 @@
 # -------------- Build-time variables --------------
+
 ARG PLEROMA_VERSION=stable
 ARG DATA=/var/lib/pleroma
 
@@ -6,8 +7,10 @@ ARG HARDENED_MALLOC_VERSION=8
 
 ARG UID=991
 ARG GID=991
-# ---------------------------------------------------
-### Build Hardened Malloc
+
+
+# -------------- Build Hardened Malloc --------------
+
 FROM alpine:edge as build-malloc
 
 ARG HARDENED_MALLOC_VERSION
@@ -19,7 +22,9 @@ RUN apk --no-cache add build-base git gnupg && cd /tmp \
     && cd hardened_malloc && git verify-tag $(git describe --tags) \
     && make CONFIG_NATIVE=${CONFIG_NATIVE}
 
-### Build Pleroma (production environment)
+
+# -------------- Build Pleroma (production environment) --------------
+
 FROM alpine:edge as pleroma
 
 COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
@@ -55,8 +60,9 @@ RUN apk --no-cache add \
     file-dev \
     unzip \
     openssl
-    # Install build dependencies
-    RUN apk --no-cache add -t build-dependencies \
+
+# Install build dependencies
+RUN apk --no-cache add -t build-dependencies \
     build-base \
     bash \
     libidn-dev \
@@ -88,6 +94,7 @@ ENV MIX_ENV=prod \
 # Install Pleroma
 RUN git clone -b develop https://git.pleroma.social/pleroma/pleroma.git /pleroma \
     && git checkout ${PLEROMA_VERSION}
+
 # Config
 RUN echo "import Mix.Config" > config/prod.secret.exs \
     && mix local.hex --force \
@@ -96,6 +103,7 @@ RUN echo "import Mix.Config" > config/prod.secret.exs \
     && mkdir release \
     && mix release --path /pleroma
 COPY ./config.exs /etc/pleroma/config.exs
+
 # Prepare pleroma user
 RUN adduser -g $GID -u $UID --disabled-password --gecos "" pleroma
 RUN chown -R pleroma:pleroma /pleroma \
@@ -104,9 +112,11 @@ RUN chown -R pleroma:pleroma /pleroma \
     && mkdir -p ${DATA}/uploads \
     && mkdir -p ${DATA}/static \
     && chown -R pleroma ${DATA}
+
 # Drop the bash script
 COPY *.sh /pleroma
 RUN chmod 777 /pleroma/run-pleroma.sh
+
 # Get Soapbox
 ADD https://gitlab.com/api/v4/projects/17765635/jobs/artifacts/develop/download?job=build-production /tmp/soapbox-fe.zip
 RUN chown pleroma /tmp/soapbox-fe.zip
