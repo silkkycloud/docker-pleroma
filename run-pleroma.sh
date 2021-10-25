@@ -8,10 +8,10 @@ while ! pg_isready -U "${POSTGRES_USER:-pleroma}" -d "postgres://${POSTGRES_HOST
   sleep 1s
 done
 
-./pleroma_ctl migrate
+./bin/pleroma_ctl migrate
 
 if [ "${USE_RUM:-n}" = "y" ] ; then
-  ./pleroma_ctl migrate --migrations-path priv/repo/optional_migrations/rum_indexing/
+  ./bin/pleroma_ctl migrate --migrations-path priv/repo/optional_migrations/rum_indexing/
 fi
 
 if [ "${USE_SOAPBOX:-n}" = "y" ]; then
@@ -19,4 +19,4 @@ if [ "${USE_SOAPBOX:-n}" = "y" ]; then
   rm /tmp/soapbox-fe.zip
 fi
 
-exec ./pleroma start
+exec ./bin/pleroma start
