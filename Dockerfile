@@ -42,8 +42,6 @@ RUN apk --no-cache add \
     file \
     git \
     bash \
-    gcc \
-    g++ \
     musl-dev \
     postgresql-client \
     make \
@@ -52,15 +50,11 @@ RUN apk --no-cache add \
     erlang \
     tini \
     imagemagick \
-    libmagic \
     ncurses \
     cmake \ 
-    file-dev\
+    file-dev \
     unzip \
-    libxslt \
-    libpq \
     openssl \
-    readline 
     # Install build dependencies
     RUN apk --no-cache add -t build-dependencies \
     build-base \
@@ -82,7 +76,7 @@ RUN apk --no-cache add \
     libmagic \
     ncurses \
     cmake \ 
-    file-dev\
+    file-dev \
     libxslt-dev \
     postgresql-dev \
     protobuf-dev
