@@ -2,27 +2,27 @@
 ARG PLEROMA_VERSION=stable
 ARG DATA=/var/lib/pleroma
 
-ARG HARDENED_MALLOC_VERSION=12
+ARG HARDENED_MALLOC_VERSION=8
 
 ARG UID=991
 ARG GID=991
 # ---------------------------------------------------
 ### Build Hardened Malloc
-#FROM alpine:edge as build-malloc
+FROM alpine:edge as build-malloc
 
-#ARG HARDENED_MALLOC_VERSION
-#ARG CONFIG_NATIVE=false
+ARG HARDENED_MALLOC_VERSION
+ARG CONFIG_NATIVE=false
 
-#RUN apk --no-cache add build-base git gnupg && cd /tmp \
-#    && wget -q https://github.com/thestinger.gpg && gpg --import thestinger.gpg \
-#    && git clone --depth 1 --recursive --branch ${HARDENED_MALLOC_VERSION} https://github.com/GrapheneOS/hardened_malloc \
-#    && cd hardened_malloc && git verify-tag $(git describe --tags) \
-#    && make CONFIG_NATIVE=${CONFIG_NATIVE}
+RUN apk --no-cache add build-base git gnupg && cd /tmp \
+    && wget -q https://github.com/thestinger.gpg && gpg --import thestinger.gpg \
+    && git clone --depth 1 --recursive --branch ${HARDENED_MALLOC_VERSION} https://github.com/GrapheneOS/hardened_malloc \
+    && cd hardened_malloc && git verify-tag $(git describe --tags) \
+    && make CONFIG_NATIVE=${CONFIG_NATIVE}
 
 ### Build Pleroma (production environment)
 FROM alpine:edge as pleroma
 
-#COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
+COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
 
 ARG PLEROMA_VERSION
 ARG DATA
@@ -81,8 +81,8 @@ RUN apk --no-cache add \
     protobuf-dev
     
     
-ENV MIX_ENV=prod 
-#LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"
+ENV MIX_ENV=prod \
+    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"
 # Install Pleroma
 RUN git clone -b develop https://git.pleroma.social/pleroma/pleroma.git /pleroma \
     && git checkout ${PLEROMA_VERSION}
@@ -104,6 +104,7 @@ RUN chown -R pleroma:pleroma /pleroma \
     && chown -R pleroma ${DATA}
 # Drop the bash script
 COPY *.sh /pleroma
+RUN chmod 777 /pleroma/run-pleroma.sh
 # Get Soapbox
 ADD https://gitlab.com/api/v4/projects/17765635/jobs/artifacts/develop/download?job=build-production /tmp/soapbox-fe.zip
 RUN chown pleroma /tmp/soapbox-fe.zip
