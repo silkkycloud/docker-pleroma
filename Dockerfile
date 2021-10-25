@@ -2,15 +2,13 @@
 ARG PLEROMA_VERSION=stable
 ARG DATA=/var/lib/pleroma
 
-ARG ALPINE_VERSION=edge
 ARG HARDENED_MALLOC_VERSION=12
 
 ARG UID=991
 ARG GID=991
 # ---------------------------------------------------
 ### Build Hardened Malloc
-ARG ALPINE_VERSION
-FROM alpine:$ALPINE_VERSION as build-malloc
+FROM alpine:edge as build-malloc
 
 ARG HARDENED_MALLOC_VERSION
 ARG CONFIG_NATIVE=false
@@ -22,8 +20,7 @@ RUN apk --no-cache add build-base git gnupg && cd /tmp \
  && make CONFIG_NATIVE=${CONFIG_NATIVE}
 
 ### Build Pleroma (production environment)
-ARG ALPINE_VERSION
-FROM alpine:$ALPINE_VERSION as pleroma
+FROM alpine:edge as pleroma
 
 COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
 
@@ -97,7 +94,7 @@ RUN apk --no-cache add \
     protobuf-dev
 # Install Pleroma
 RUN git clone -b develop https://git.pleroma.social/pleroma/pleroma.git /pleroma \
-    && git checkout $PLEROMA_VER 
+    && git checkout ${PLEROMA_VERSION}
 # Config
 RUN echo "import Mix.Config" > config/prod.secret.exs \
     && mix local.hex --force \
