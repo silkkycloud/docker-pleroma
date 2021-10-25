@@ -30,9 +30,6 @@ ARG DATA
 ARG UID
 ARG GID
 
-ENV MIX_ENV=prod \
-    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"
-
 WORKDIR /pleroma
 
 # Install runtime dependencies
@@ -82,6 +79,10 @@ RUN apk --no-cache add \
     libxslt-dev \
     postgresql-dev \
     protobuf-dev
+    
+    
+ENV MIX_ENV=prod \
+    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"
 # Install Pleroma
 RUN git clone -b develop https://git.pleroma.social/pleroma/pleroma.git /pleroma \
     && git checkout ${PLEROMA_VERSION}
