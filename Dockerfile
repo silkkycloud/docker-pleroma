@@ -28,6 +28,7 @@ FROM alpine:${ALPINE_VERSION} as pleroma
 COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
 
 ARG PLEROMA_VERSION
+ARG DATA
 
 ARG UID
 ARG GID
