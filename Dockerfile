@@ -31,9 +31,6 @@ COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/l
 ARG PLEROMA_VERSION
 ARG DATA
 
-ENV MIX_ENV=prod \
-    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
-
 WORKDIR /pleroma
 
 
@@ -69,6 +66,9 @@ RUN apk --no-cache add -t build-dependencies \
     libxslt-dev \ 
     protobuf-dev
 
+ENV MIX_ENV=prod \
+    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
+
 # Download Pleroma
 RUN git clone -b develop https://git.pleroma.social/pleroma/pleroma.git /pleroma \
     && git checkout ${PLEROMA_VERSION}
@@ -96,9 +96,6 @@ ARG DATA
 ARG UID
 ARG GID
 
-ENV MIX_ENV=prod \
-    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
-
 WORKDIR /pleroma
 
 # Install runtime dependencies
@@ -124,6 +121,9 @@ RUN apk --no-cache add \
     file-dev \
     unzip \
     openssl
+
+ENV MIX_ENV=prod \
+    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
 
 COPY ./config.exs /etc/pleroma/config.exs
 
