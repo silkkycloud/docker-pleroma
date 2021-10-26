@@ -7,6 +7,8 @@ Advanatges of our image:
 - Tini init manager
 - Uses official Pleroma's Docker config
 - Build from source code and uses by default stable branch
+- Rootless image
+- The image is being scanned by Trivy once a day
 
 # How to adopt for yourself
 Check the config.exs file and configurate it as you wish, next check which branch you want to use (by default it is stable one)
