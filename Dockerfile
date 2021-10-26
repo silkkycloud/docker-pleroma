@@ -1,5 +1,3 @@
-# -------------- Build-time variables --------------
-
 ARG PLEROMA_VERSION=stable
 ARG DATA=/var/lib/pleroma
 
@@ -8,8 +6,9 @@ ARG HARDENED_MALLOC_VERSION=8
 ARG UID=991
 ARG GID=991
 
-# -------------- Build Hardened Malloc --------------
-
+####################################################################################################
+## Build Hardened Malloc
+####################################################################################################
 FROM alpine:edge as build-malloc
 
 ARG HARDENED_MALLOC_VERSION
@@ -21,16 +20,22 @@ RUN apk --no-cache add build-base git gnupg && cd /tmp \
     && cd hardened_malloc && git verify-tag $(git describe --tags) \
     && make CONFIG_NATIVE=${CONFIG_NATIVE}
 
-# -------------- Build Pleroma --------------
 
+####################################################################################################
+## Builder
+####################################################################################################
 FROM alpine:edge as build
+
+COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
 
 ARG PLEROMA_VERSION
 ARG DATA
 
-ENV MIX_ENV=prod
+ENV MIX_ENV=prod \
+    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
 
 WORKDIR /pleroma
+
 
 # Install build dependencies
 RUN apk --no-cache add -t build-dependencies \
@@ -76,13 +81,14 @@ RUN echo "import Mix.Config" > config/prod.secret.exs \
     && mkdir release \
     && mix release --path /pleroma
 
-# -------------- Run Pleroma --------------
 
+####################################################################################################
+## Final image
+####################################################################################################
 FROM alpine:edge
 
 COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
 
-# Get Pleroma From Build
 COPY --from=build /pleroma /pleroma
 
 ARG DATA
