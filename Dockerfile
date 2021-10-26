@@ -32,6 +32,7 @@ WORKDIR /pleroma
 
 # Install build dependencies
 RUN apk --no-cache add -t build-dependencies \
+    git \
     build-base \
     bash \
     libidn-dev \
