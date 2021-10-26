@@ -28,10 +28,19 @@ FROM alpine:edge as build
 ARG PLEROMA_VERSION
 ARG DATA
 
+ENV MIX_ENV=prod
+
 WORKDIR /pleroma
 
 # Install build dependencies
 RUN apk --no-cache add -t build-dependencies \
+    ca-certificates \
+    ffmpeg \
+    file \
+    libstdc++ \
+    libgcc \
+    tini \
+    openssl \
     git \
     build-base \
     bash \
@@ -40,8 +49,6 @@ RUN apk --no-cache add -t build-dependencies \
     curl \
     unzip \
     libxml2-dev \
-    elixir \
-    erlang \
     gcc \
     g++ \
     musl-dev \
@@ -54,8 +61,7 @@ RUN apk --no-cache add -t build-dependencies \
     ncurses \
     cmake \ 
     file-dev \
-    libxslt-dev \
-    postgresql-dev \
+    libxslt-dev \ 
     protobuf-dev
 
 # Download Pleroma
