@@ -90,6 +90,9 @@ ARG DATA
 ARG UID
 ARG GID
 
+ENV MIX_ENV=prod \
+    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
+
 WORKDIR /pleroma
 
 # Install runtime dependencies
@@ -115,9 +118,6 @@ RUN apk --no-cache add \
     file-dev \
     unzip \
     openssl
-  
-ENV MIX_ENV=prod \
-    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
 
 COPY ./config.exs /etc/pleroma/config.exs
 
