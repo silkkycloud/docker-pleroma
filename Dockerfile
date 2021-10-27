@@ -144,9 +144,9 @@ RUN chmod 777 /pleroma/run-pleroma.sh
 ADD https://gitlab.com/api/v4/projects/17765635/jobs/artifacts/develop/download?job=build-production /tmp/soapbox-fe.zip
 RUN chown pleroma /tmp/soapbox-fe.zip
 
-# Get Soapbox Instance Config
-ADD https://github.com/silkkycloud/config-soapbox/archive/refs/heads/main.zip /tmp/config-soapbox.zip
-RUN chown pleroma /tmp/config-soapbox.zip
+# Get Soapbox instance config
+RUN git clone https://github.com/silkkycloud/config-soapbox.git /tmp/config-soapbox
+RUN chown pleroma /tmp/config-soapbox
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
