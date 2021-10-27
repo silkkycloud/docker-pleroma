@@ -16,7 +16,7 @@ fi
 
 if [ "${USE_SOAPBOX:-n}" = "y" ]; then
   unzip -o /tmp/soapbox-fe.zip -d /var/lib/pleroma
-  cp -r /tmp/config-soapbox/. /var/lib/pleroma/instance
+  cp -r /tmp/config-soapbox/. /var/lib/pleroma/static/instance
   rm /tmp/soapbox-fe.zip
   rm -r /tmp/config-soapbox
 fi
