@@ -36,37 +36,29 @@ WORKDIR /pleroma
 
 # Install build dependencies
 RUN apk --no-cache add -t build-dependencies \
+    build-base \
     ca-certificates \
     ffmpeg \
     file \
-    libstdc++ \
-    libgcc \
-    tini \
     openssl \
     git \
-    build-base \
     bash \
-    libidn-dev \
-    libtool \
     curl \
     unzip \
-    libxml2-dev \
-    gcc \
-    g++ \
-    musl-dev \
-    make \
-    exiftool \
+    erlang-dev \
+    erlang-runtime-tools \
+    erlang-xmerl \
     elixir \
     erlang \
     imagemagick \
     libmagic \
-    ncurses \
     cmake \ 
-    file-dev \
-    libxslt-dev \ 
-    protobuf-dev
-
+    file-dev
+    
+# Preload hardened malloc, and tell Elixir that we are currently want to run this in prodcution mode.
 ENV MIX_ENV=prod \
+    LC_ALL=C.UTF-8 \
+    LANG=C.UTF-8 \
     LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
 
 # Download Pleroma
@@ -102,28 +94,26 @@ WORKDIR /pleroma
 RUN apk --no-cache add \
     ca-certificates \
     ffmpeg \
-    file \
-    libstdc++ \
-    libgcc \
     git \
     bash \
-    musl-dev \
     postgresql-client \
-    make \
     exiftool \
     elixir \
     erlang \
+    erlang-runtime-tools \
+    erlang-xmerl \
     tini \
     curl \
     imagemagick \
-    ncurses \
     cmake \ 
-    file-dev \
     unzip \
     openssl
 
+# Preload hardened malloc, and tell Elixir that we are currently want to run this in prodcution mode.
 ENV MIX_ENV=prod \
-    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
+    LC_ALL=C.UTF-8 \
+    LANG=C.UTF-8 \
+    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"   
 
 COPY ./config.exs /etc/pleroma/config.exs
 
@@ -148,7 +138,7 @@ RUN chown pleroma /tmp/soapbox-fe.zip
 RUN git clone https://github.com/silkkycloud/config-soapbox.git /tmp/config-soapbox
 RUN chown pleroma /tmp/config-soapbox
 
-ENTRYPOINT ["/sbin/tini", "--"]
+ENTRYPOINT ["/sbin/tini", "--", "/pleroma/run-pleroma.sh"]
 
 STOPSIGNAL SIGTERM
 
@@ -156,5 +146,3 @@ HEALTHCHECK \
     --start-period=1m \
     --interval=3m \
     CMD curl --fail http://localhost:4000/api/v1/instance || exit 1
-
-CMD [ "/pleroma/run-pleroma.sh" ]
