@@ -46,8 +46,6 @@ RUN apk --no-cache add -t build-dependencies \
     curl \
     unzip \
     erlang-dev \
-    erlang-runtime-tools \
-    erlang-xmerl \
     elixir \
     erlang \
     imagemagick \
@@ -100,8 +98,6 @@ RUN apk --no-cache add \
     exiftool \
     elixir \
     erlang \
-    erlang-runtime-tools \
-    erlang-xmerl \
     tini \
     curl \
     imagemagick \
