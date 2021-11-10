@@ -55,8 +55,6 @@ RUN apk --no-cache add -t build-dependencies \
     
 # Preload hardened malloc, and tell Elixir that we are currently want to run this in prodcution mode.
 ENV MIX_ENV=prod \
-    LC_ALL=C.UTF-8 \
-    LANG=C.UTF-8 \
     LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
 
 # Download Pleroma
@@ -107,8 +105,6 @@ RUN apk --no-cache add \
 
 # Preload hardened malloc, and tell Elixir that we are currently want to run this in prodcution mode.
 ENV MIX_ENV=prod \
-    LC_ALL=C.UTF-8 \
-    LANG=C.UTF-8 \
     LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"   
 
 COPY ./config.exs /etc/pleroma/config.exs
