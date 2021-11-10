@@ -57,7 +57,7 @@ RUN apk --no-cache add -t build-dependencies \
 ENV MIX_ENV=prod \
     LC_ALL=C.UTF-8 \
     LANG=C.UTF-8 \
-    ENV PLEROMA_CONFIG_PATH=/etc/pleroma/config.exs \
+    PLEROMA_CONFIG_PATH=/etc/pleroma/config.exs \
     LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
 
 # Download Pleroma
@@ -110,7 +110,7 @@ RUN apk --no-cache add \
 ENV MIX_ENV=prod \
     LC_ALL=C.UTF-8 \
     LANG=C.UTF-8 \
-    ENV PLEROMA_CONFIG_PATH=/etc/pleroma/config.exs \
+    PLEROMA_CONFIG_PATH=/etc/pleroma/config.exs \
     LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"   
 
 # Prepare pleroma user
