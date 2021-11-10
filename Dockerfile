@@ -58,6 +58,9 @@ RUN apk --no-cache add -t build-dependencies \
     
 # Preload hardened malloc, and tell Elixir that we are currently want to run this in prodcution mode.
 ENV MIX_ENV=prod \
+    LC_ALL=C.UTF-8 \
+    LANG=C.UTF-8 \
+    PLEROMA_CONFIG_PATH=/etc/pleroma/config.exs \
     LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
 
 # Download Pleroma
@@ -107,9 +110,10 @@ RUN apk --no-cache add \
 
 # Preload hardened malloc, and tell Elixir that we are currently want to run this in prodcution mode.
 ENV MIX_ENV=prod \
+    LC_ALL=C.UTF-8 \
+    LANG=C.UTF-8 \
+    PLEROMA_CONFIG_PATH=/etc/pleroma/config.exs \
     LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"   
-
-COPY ./config.exs /etc/pleroma/config.exs
 
 # Prepare pleroma user
 RUN adduser -g $GID -u $UID --disabled-password --gecos "" pleroma
@@ -122,7 +126,7 @@ RUN chown -R pleroma:pleroma /pleroma \
 
 # Drop the bash script
 COPY *.sh /pleroma
-RUN chmod 777 /pleroma/run-pleroma.sh
+RUN chmod 777 /pleroma/run-pleroma.sh /pleroma/gen-config.sh
 
 # Get Soapbox
 ADD https://gitlab.com/api/v4/projects/17765635/jobs/artifacts/develop/download?job=build-production /tmp/soapbox-fe.zip
