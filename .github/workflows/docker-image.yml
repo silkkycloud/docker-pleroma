@@ -36,4 +36,4 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/silkkycloud/pleroma:latest
+          tags: ghcr.io/silkkycloud/pleroma:edge
