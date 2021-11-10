@@ -34,24 +34,27 @@ ARG DATA
 WORKDIR /pleroma
 
 
-# Install build dependencies
+# Install build dependencies    
 RUN apk --no-cache add -t build-dependencies \
-    build-base \
-    ca-certificates \
-    ffmpeg \
-    file \
-    openssl \
     git \
+    gcc \
+    g++ \
     bash \
-    curl \
     unzip \
-    erlang-dev \
+    ca-certificates \
     elixir \
     erlang \
+    curl \
+    musl-dev \
+    make \ 
+    cmake \
+    file-dev \
+    exiftool \
     imagemagick \
     libmagic \
-    cmake \ 
-    file-dev
+    ncurses \
+    postgresql-client \
+    ffmpeg
     
 # Preload hardened malloc, and tell Elixir that we are currently want to run this in prodcution mode.
 ENV MIX_ENV=prod \
@@ -100,8 +103,7 @@ RUN apk --no-cache add \
     curl \
     imagemagick \
     cmake \ 
-    unzip \
-    openssl
+    unzip
 
 # Preload hardened malloc, and tell Elixir that we are currently want to run this in prodcution mode.
 ENV MIX_ENV=prod \
