@@ -11,6 +11,6 @@ Advanatges of our image:
 - The image is being scanned by Trivy once a day
 
 # How to adopt for yourself
-Check the config.exs file and configurate it as you wish, next check which branch you want to use (by default it is stable one)
+Check the config.exs file and configurate it as you wish, next check which branch you want to use (by default it is stable)
 Our docker compose is here https://github.com/silkkycloud/deploy-pleroma
 Our proxy deploy is here https://github.com/silkkycloud/deploy-pleroma-proxy (optional if you don't use media proxy)
