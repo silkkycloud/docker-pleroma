@@ -37,4 +37,3 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: ghcr.io/silkkycloud/pleroma:latest
-          cache-from: type=local,src=cache
