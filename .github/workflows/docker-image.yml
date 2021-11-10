@@ -6,7 +6,8 @@ on:
       - "**.md"
     branches:
       - master
-  workflow_dispatch:
+  schedule:
+    - cron: "0 12 * * 1"
 
 jobs:
   build-docker:
@@ -28,20 +29,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: ${{ github.workspace }}/cache
-          key: ${{ runner.os }}-docker-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-docker-          
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
           file: ./Dockerfile
-          push: true
           platforms: linux/amd64
+          push: true
           tags: ghcr.io/silkkycloud/pleroma:latest
           cache-from: type=local,src=cache
-          cache-to: type=local,dest=cache
