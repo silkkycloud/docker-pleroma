@@ -133,7 +133,7 @@ ADD https://gitlab.com/api/v4/projects/17765635/jobs/artifacts/develop/download?
 RUN chown pleroma /tmp/soapbox-fe.zip
 
 # Get Soapbox instance config
-RUN git clone https://github.com/silkkycloud/config-soapbox.git /tmp/config-soapbox
+COPY ./Soapbox /tmp/config-soapbox
 RUN chown pleroma /tmp/config-soapbox
 
 USER pleroma
