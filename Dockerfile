@@ -39,6 +39,8 @@ RUN apk --no-cache add -t build-dependencies \
     git \
     gcc \
     g++ \
+    libgcc \
+    libstdc++ \
     bash \
     unzip \
     ca-certificates \
@@ -106,7 +108,9 @@ RUN apk --no-cache add \
     curl \
     imagemagick \
     cmake \ 
-    unzip
+    unzip \
+    libgcc \
+    libstdc++
 
 # Preload hardened malloc, and tell Elixir that we are currently want to run this in prodcution mode.
 ENV MIX_ENV=prod \
@@ -124,10 +128,6 @@ RUN chown -R pleroma:pleroma /pleroma \
     && mkdir -p ${DATA}/static \
     && chown -R pleroma ${DATA}
 
-# Drop the bash script
-COPY *.sh /pleroma
-RUN chmod 777 /pleroma/run-pleroma.sh /pleroma/gen-config.sh
-
 # Get Soapbox
 ADD https://gitlab.com/api/v4/projects/17765635/jobs/artifacts/develop/download?job=build-production /tmp/soapbox-fe.zip
 RUN chown pleroma /tmp/soapbox-fe.zip
@@ -135,6 +135,12 @@ RUN chown pleroma /tmp/soapbox-fe.zip
 # Get Soapbox instance config
 RUN git clone https://github.com/silkkycloud/config-soapbox.git /tmp/config-soapbox
 RUN chown pleroma /tmp/config-soapbox
+
+USER pleroma
+
+# Drop the bash script
+COPY *.sh /pleroma
+RUN chmod 777 /pleroma/run-pleroma.sh /pleroma/gen-config.sh
 
 ENTRYPOINT ["/sbin/tini", "--", "/pleroma/run-pleroma.sh"]
 
