@@ -29,6 +29,15 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get hash of latest image
+        run: docker pull alpine:edge && docker inspect --format='{{index .RepoDigests 0}}' alpine:edge > dockerhash.txt
+      - name: cache docker cache
+        uses: actions/cache@v2.1.6
+        with:
+          path: ${{ github.workspace }}/cache
+          key: ${{ runner.os }}-docker-${{ hashFiles('**/dockerhash.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
@@ -36,4 +45,6 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/silkkycloud/pleroma:edge
+          tags: ghcr.io/silkkycloud/pleroma:latest
+          cache-from: type=local,src=cache
+          cache-to: type=local,dest=cache
