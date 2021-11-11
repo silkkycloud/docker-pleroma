@@ -128,6 +128,10 @@ RUN chown -R pleroma:pleroma /pleroma \
     && mkdir -p ${DATA}/static \
     && chown -R pleroma ${DATA}
 
+# Drop the bash script
+COPY *.sh /pleroma
+RUN chmod 777 /pleroma/run-pleroma.sh /pleroma/gen-config.sh
+
 # Get Soapbox
 ADD https://gitlab.com/api/v4/projects/17765635/jobs/artifacts/develop/download?job=build-production /tmp/soapbox-fe.zip
 RUN chown pleroma /tmp/soapbox-fe.zip
@@ -137,10 +141,6 @@ COPY ./Soapbox /tmp/config-soapbox
 RUN chown pleroma /tmp/config-soapbox
 
 USER pleroma
-
-# Drop the bash script
-COPY *.sh /pleroma
-RUN chmod 777 /pleroma/run-pleroma.sh /pleroma/gen-config.sh
 
 ENTRYPOINT ["/sbin/tini", "--", "/pleroma/run-pleroma.sh"]
 
