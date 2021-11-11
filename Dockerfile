@@ -141,6 +141,7 @@ COPY ./Soapbox /tmp/config-soapbox
 RUN chown pleroma /tmp/config-soapbox
 
 #USER pleroma
+# TODO: Fix image running rootless
 
 ENTRYPOINT ["/sbin/tini", "--", "/pleroma/run-pleroma.sh"]
 
