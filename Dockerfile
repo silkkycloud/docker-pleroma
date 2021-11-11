@@ -112,7 +112,7 @@ RUN apk --no-cache add \
     libgcc \
     libstdc++
 
-# Preload hardened malloc, and tell Elixir that we are currently want to run this in prodcution mode.
+# Preload hardened malloc, and tell Elixir that we are currently want to run this in production mode.
 ENV MIX_ENV=prod \
     LC_ALL=C.UTF-8 \
     LANG=C.UTF-8 \
@@ -140,7 +140,7 @@ RUN chown pleroma /tmp/soapbox-fe.zip
 COPY ./Soapbox /tmp/config-soapbox
 RUN chown pleroma /tmp/config-soapbox
 
-USER pleroma
+#USER pleroma
 
 ENTRYPOINT ["/sbin/tini", "--", "/pleroma/run-pleroma.sh"]
 
