@@ -1,4 +1,5 @@
 ARG PLEROMA_VERSION=stable
+ARG PLEROMA_GIT_REPO=https://git.pleroma.social/pleroma/pleroma.git
 ARG DATA=/var/lib/pleroma
 
 ARG HARDENED_MALLOC_VERSION=8
@@ -29,10 +30,10 @@ FROM alpine:edge as build
 COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
 
 ARG PLEROMA_VERSION
+ARG PLEROMA_GIT_REPO
 ARG DATA
 
 WORKDIR /pleroma
-
 
 # Install build dependencies    
 RUN apk --no-cache add -t build-dependencies \
