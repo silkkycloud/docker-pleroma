@@ -55,7 +55,6 @@ RUN apk --no-cache add -t build-dependencies \
     imagemagick \
     libmagic \
     ncurses \
-    postgresql-client \
     ffmpeg
     
 # Preload hardened malloc, and tell Elixir that we are currently want to run this in prodcution mode.
@@ -66,7 +65,7 @@ ENV MIX_ENV=prod \
     LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
 
 # Download Pleroma
-RUN git clone -b develop https://git.pleroma.social/pleroma/pleroma.git /pleroma \
+RUN git clone -b develop ${PLEROMA_GIT_REPO} /pleroma \
     && git checkout ${PLEROMA_VERSION}
 
 # Build
