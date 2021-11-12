@@ -1,4 +1,5 @@
 ARG PLEROMA_VERSION=stable
+ARG PLEROMA_GIT_REPO=https://git.pleroma.social/pleroma/pleroma.git
 ARG DATA=/var/lib/pleroma
 
 ARG HARDENED_MALLOC_VERSION=8
@@ -29,10 +30,10 @@ FROM alpine:edge as build
 COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
 
 ARG PLEROMA_VERSION
+ARG PLEROMA_GIT_REPO
 ARG DATA
 
 WORKDIR /pleroma
-
 
 # Install build dependencies    
 RUN apk --no-cache add -t build-dependencies \
@@ -55,7 +56,6 @@ RUN apk --no-cache add -t build-dependencies \
     imagemagick \
     libmagic \
     ncurses \
-    postgresql-client \
     ffmpeg
     
 # Preload hardened malloc, and tell Elixir that we are currently want to run this in prodcution mode.
@@ -66,7 +66,7 @@ ENV MIX_ENV=prod \
     LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
 
 # Download Pleroma
-RUN git clone -b develop https://git.pleroma.social/pleroma/pleroma.git /pleroma \
+RUN git clone -b develop ${PLEROMA_GIT_REPO} /pleroma \
     && git checkout ${PLEROMA_VERSION}
 
 # Build

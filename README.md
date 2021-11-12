@@ -22,6 +22,12 @@ The three environment variables you MUST supply are:
 - `ADMIN_EMAIL`
 - `POSTGRES_PASSWORD`
 
+In case if you want to use your own repository with Pleroma backend then you must also fill these variatables as well!
+By default it will use official git repo, at stable branch.
+
+- `PLEROMA_GIT_REPO` - link to the git repo
+- `PLEROMA_VERSION` - will use specific branch of repo
+
 | Arg | Env | Default value of env |
 | -------- | ------------------- | ------------- |
 | `--domain` | `DOMAIN` | _none_ |

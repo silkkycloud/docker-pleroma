@@ -5,13 +5,16 @@ on:
     paths-ignore:
       - "**.md"
     branches:
-      - master
+      - master 
   schedule:
     - cron: "0 12 * * 1"
 
 jobs:
   build-docker:
     runs-on: ubuntu-latest
+    env:
+      PLEROMA_GIT_REPO: https://git.pleroma.social/pleroma/pleroma.git
+      PLEROMA_VERSION: stable
     steps:
       - uses: actions/checkout@v2
       - name: Set up QEMU
