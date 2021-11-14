@@ -107,6 +107,7 @@ RUN apk --no-cache add \
     tini \
     curl \
     imagemagick \
+    libmagic \
     cmake \ 
     unzip \
     libgcc \
