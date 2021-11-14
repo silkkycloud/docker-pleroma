@@ -2,24 +2,24 @@ ARG PLEROMA_VERSION=stable
 ARG PLEROMA_GIT_REPO=https://git.pleroma.social/pleroma/pleroma.git
 ARG DATA=/var/lib/pleroma
 
-ARG HARDENED_MALLOC_VERSION=8
+#ARG HARDENED_MALLOC_VERSION=8
 
 ARG UID=991
 ARG GID=991
 
 ####################################################################################################
-## Build Hardened Malloc
+## Build Hardened Malloc (Disabled)
 ####################################################################################################
-FROM alpine:edge as build-malloc
+#FROM alpine:edge as build-malloc
 
-ARG HARDENED_MALLOC_VERSION
-ARG CONFIG_NATIVE=false
+#ARG HARDENED_MALLOC_VERSION
+#ARG CONFIG_NATIVE=false
 
-RUN apk --no-cache add build-base git gnupg && cd /tmp \
-    && wget -q https://github.com/thestinger.gpg && gpg --import thestinger.gpg \
-    && git clone --depth 1 --recursive --branch ${HARDENED_MALLOC_VERSION} https://github.com/GrapheneOS/hardened_malloc \
-    && cd hardened_malloc && git verify-tag $(git describe --tags) \
-    && make CONFIG_NATIVE=${CONFIG_NATIVE}
+#RUN apk --no-cache add build-base git gnupg && cd /tmp \
+#    && wget -q https://github.com/thestinger.gpg && gpg --import thestinger.gpg \
+#    && git clone --depth 1 --recursive --branch ${HARDENED_MALLOC_VERSION} https://github.com/GrapheneOS/hardened_malloc \
+#    && cd hardened_malloc && git verify-tag $(git describe --tags) \
+#    && make CONFIG_NATIVE=${CONFIG_NATIVE}
 
 
 ####################################################################################################
@@ -27,7 +27,7 @@ RUN apk --no-cache add build-base git gnupg && cd /tmp \
 ####################################################################################################
 FROM alpine:edge as build
 
-COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
+#COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
 
 ARG PLEROMA_VERSION
 ARG PLEROMA_GIT_REPO
@@ -40,8 +40,8 @@ RUN apk --no-cache add -t build-dependencies \
     git \
     gcc \
     g++ \
-    libgcc \
-    libstdc++ \
+#    libgcc \
+#    libstdc++ \
     bash \
     unzip \
     ca-certificates \
@@ -62,8 +62,8 @@ RUN apk --no-cache add -t build-dependencies \
 ENV MIX_ENV=prod \
     LC_ALL=C.UTF-8 \
     LANG=C.UTF-8 \
-    PLEROMA_CONFIG_PATH=/etc/pleroma/config.exs \
-    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
+    PLEROMA_CONFIG_PATH=/etc/pleroma/config.exs
+#    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"  
 
 # Download Pleroma
 RUN git clone -b develop ${PLEROMA_GIT_REPO} /pleroma \
@@ -109,16 +109,16 @@ RUN apk --no-cache add \
     imagemagick \
     libmagic \
     cmake \ 
-    unzip \
-    libgcc \
-    libstdc++
+    unzip 
+#    libgcc \
+#    libstdc++
 
 # Preload hardened malloc, and tell Elixir that we are currently want to run this in production mode.
 ENV MIX_ENV=prod \
     LC_ALL=C.UTF-8 \
     LANG=C.UTF-8 \
-    PLEROMA_CONFIG_PATH=/etc/pleroma/config.exs \
-    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"   
+    PLEROMA_CONFIG_PATH=/etc/pleroma/config.exs 
+#    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so"   
 
 # Prepare pleroma user
 RUN adduser -g $GID -u $UID --disabled-password --gecos "" pleroma
