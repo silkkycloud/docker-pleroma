@@ -83,7 +83,7 @@ RUN echo "import Mix.Config" > config/prod.secret.exs \
 ####################################################################################################
 FROM alpine:edge
 
-COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
+#COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
 
 COPY --from=build /pleroma /pleroma
 
