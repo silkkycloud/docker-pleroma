@@ -31,7 +31,7 @@ services:
       - POSTGRES_HOST=postgresql
       - POSTGRES_DB=pleroma
       - POSTGRES_USER=pleroma
-      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRES_PASS=${POSTGRESQL_PASSWORD}
       # Mailer
       - SMTP_HOST=${MAIL_HOST}
       - SMTP_PORT=${MAIL_PORT}
