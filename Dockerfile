@@ -19,6 +19,7 @@ RUN apk add --no-cache \
     make \ 
     cmake \
     file-dev \
+    file \
     exiftool \
     imagemagick \
     libmagic \
@@ -27,9 +28,9 @@ RUN apk add --no-cache \
 
 WORKDIR /pleroma
 
-ADD https://git.pleroma.social/pleroma/pleroma/-/archive/develop/pleroma-develop.tar.gz /tmp/pleroma-develop.tar.gz
-RUN tar xvfz /tmp/pleroma-develop.tar.gz -C /tmp \
-    && cp -r /tmp/pleroma-develop/. /pleroma
+ADD https://git.pleroma.social/pleroma/pleroma/-/archive/stable/pleroma-stable.tar.gz /tmp/pleroma-stable.tar.gz
+RUN tar xvfz /tmp/pleroma-stable.tar.gz -C /tmp \
+    && cp -r /tmp/pleroma-stable/. /pleroma
 
 # Build Pleroma
 RUN echo "import Mix.Config" > config/prod.secret.exs \
