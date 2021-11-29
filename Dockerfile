@@ -84,7 +84,7 @@ COPY ./Soapbox/. /var/lib/pleroma/static/instance
 # Secrets can't be in the docker image, so this config generates them at runtime.
 COPY ./docker-config.exs /etc/pleroma/config.exs
 # This config will be imported
-# COPY ./config.exs /var/lib/pleroma/config.exs
+COPY ./config.exs /var/lib/pleroma/config.exs
 
 COPY ./run-pleroma.sh /pleroma/run-pleroma.sh
 RUN chmod +x /plerom/run-pleroma.sh
