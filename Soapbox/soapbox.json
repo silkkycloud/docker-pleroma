@@ -30,8 +30,8 @@
     "items": [
       {
         "icon": "heart",
-        "text": "Our Website",
-        "url": "https://www.silkky.cloud"
+        "text": "Donate",
+        "url": "https://www.silkky.cloud/contribute"
       },
       {
         "icon": "power-off",
@@ -57,5 +57,5 @@
     ]
   },
   "authenticatedProfile": false,
-  "brandColor": "#4a90e2"
+  "brandColor": "#6FDDBA"
 }
