@@ -21,7 +21,7 @@
     "themeMode": "dark"
   },
   "copyright": "❤️ Silkky.Cloud",
-  "logo": "https://social-test.silkky.cloud/images/logo_pure_text.svg",
+  "logo": "/instance/images/logo_pure_text.svg",
   "greentext": true,
   "cryptoDonatePanel": {
     "limit": 3
