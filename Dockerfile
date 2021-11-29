@@ -67,7 +67,7 @@ RUN apk --no-cache add \
 
 WORKDIR /pleroma
 
-COPY --from=builder /vikunja /vikunja
+COPY --from=builder /pleroma /pleroma
 
 # Create persistent data directories
 RUN mkdir -p /etc/pleroma \
