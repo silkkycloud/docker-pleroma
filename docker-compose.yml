@@ -34,6 +34,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
       # Mailer
       - SMTP_HOST=${MAIL_HOST}
+      - SMTP_PORT=${MAIL_PORT}
       - SMTP_USERNAME=${MAIL_USERNAME}
       - SMTP_PASSWORD=${MAIL_PASSWORD}
       # General
