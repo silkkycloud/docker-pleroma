@@ -87,7 +87,7 @@ COPY ./docker-config.exs /etc/pleroma/config.exs
 COPY ./config.exs /var/lib/pleroma/config.exs
 
 COPY ./run-pleroma.sh /pleroma/run-pleroma.sh
-RUN chmod +x /plerom/run-pleroma.sh
+RUN chmod +x /pleroma/run-pleroma.sh
 
 # Add an unprivileged user and set directory permissions
 RUN adduser --disabled-password --gecos "" --no-create-home pleroma \
