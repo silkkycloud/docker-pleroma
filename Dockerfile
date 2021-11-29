@@ -79,7 +79,7 @@ ADD https://gitlab.com/api/v4/projects/17765635/jobs/artifacts/develop/download?
 RUN unzip -o /tmp/soapbox-fe.zip -d /var/lib/pleroma \
     && rm -rf /tmp/soapbox-fe.zip
 
-COPY ./Soapbox/. /var/lib/pleroma/static/instance
+COPY ./Soapbox/. /var/lib/pleroma/static
 
 # Secrets can't be in the docker image, so this config generates them at runtime.
 COPY ./docker-config.exs /etc/pleroma/config.exs
