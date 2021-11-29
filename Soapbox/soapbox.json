@@ -1,26 +1,26 @@
 {
   "cryptoAddresses": [
     {
-      "address": "bc1qjjzzm79gpaujyteu8yhjyxla0hhj224ppktyaa",
+      "address": "bc1qr5hpr3mxpj0cpqcrmzcpquhjagt9ppy7d9xdpt",
       "note": "",
       "ticker": "BTC"
     },
     {
-      "address": "0xfdd4f4618902dc1f388bC58CceC9E622d7319Ff6",
+      "address": "0x11d7AeEc9a56515a65E285C958C92a116f4eF4aD",
       "note": "",
       "ticker": "ETH"
     },
     {
-      "address": "856E1v6ab4W3AEnkW8Zyd66SJ3ckwbACdLiiFNg1kZeT6Qx5YS3eGcCDwJwaBKh3os9EtdWw6GAwUfGh6UzcYxoVJ5HvgMu",
+      "address": "84LgDjq3rJx9iZXMq14VtvNnjrtws4SYZUoSd6PoRFPiFc2YdbR5FdbeVHGxvsM6nGX4vbHAcWYeqiKPUKuXyjmWJJ96FVj",
       "note": "",
       "ticker": "XMR"
     }
   ],
   "defaultSettings": {
-    "autoPlayGif": false,
+    "autoPlayGif": true,
     "themeMode": "dark"
   },
-  "copyright": "❤️ Silkky.Cloud. Powered by tears 😢",
+  "copyright": "❤️ Silkky.Cloud",
   "logo": "https://social.silkky.cloud/instance/images/logo_pure_text.svg",
   "greentext": true,
   "cryptoDonatePanel": {

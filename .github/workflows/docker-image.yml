@@ -6,8 +6,7 @@ on:
       - "**.md"
     branches:
       - master
-  schedule:
-    - cron: "0 12 * * 1"
+  workflow_dispatch:
 
 jobs:
   build-docker:

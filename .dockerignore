@@ -1,9 +1,4 @@
 *.md
-.dockerignore
-Dockerfile
 LICENSE
-.git
-.github
 .gitignore
-cache
-dockerhash.txt
+.dockerignore
