@@ -33,5 +33,5 @@ config :pleroma, :mrf_simple,
 # Media proxy
 config :pleroma, :media_proxy,
   enabled: true
-const :pleroma, :media_preview_proxy,
+config :pleroma, :media_preview_proxy,
   enabled: true
