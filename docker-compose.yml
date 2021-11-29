@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+
+  server:
+    image: ghcr.io/silkkycloud/pleroma:latest
+    hostname: pleroma
+    networks:
+      - public
+      - backend
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - "node.hostname == main-1"
+      update_config:
+        failure_action: rollback
+        order: start-first
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.2'
+          memory: 512M
+    volumes:
+      - uploads:/var/lib/pleroma/uploads
+    environment:
+      # Database
+      - POSTGRES_HOST=postgresql
+      - POSTGRES_DB=pleroma
+      - POSTGRES_USER=pleroma
+      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
+      # Mailer
+      - SMTP_HOST=${MAIL_HOST}
+      - SMTP_USERNAME=${MAIL_USERNAME}
+      - SMTP_PASSWORD=${MAIL_PASSWORD}
+      # General
+      - DOMAIN=${PLEROMA_HOSTNAME}
+      - INSTANCE_NAME=${INSTANCE_NAME}
+      - INSTANCE_DESCRIPTION=${INSTANCE_DESCRIPTION}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - NOTIFY_EMAIL=${ADMIN_EMAIL}
+
+  postgresql:
+    image: postgres:14-alpine
+    hostname: postgresql
+    networks:
+      - backend
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - "node.hostname == main-1"
+      resources:
+        limits:
+          cpus: '1'
+          memory: 4G
+        reservations:
+          cpus: '0.2'
+          memory: 512M
+    volumes:
+      - database:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - POSTGRES_DB=pleroma
+      - POSTGRES_USER=pleroma
+      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
+
+networks:
+  public:
+    external: true
+
+  backend:
+    driver: overlay
+    internal: true
+    driver_opts:
+      encrypted: "true"
+      com.docker.network.driver.mtu: 1450
+
+volumes:
+  database:
+  uploads:
