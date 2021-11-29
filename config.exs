@@ -12,22 +12,22 @@ config :pleroma, :welcome,
 # MRF policies
 config :pleroma, :mrf_simple,
   media_nsfw: [
-    "*.pawoo.net",
-    "*.baraag.net"
+    {"*.pawoo.net"},
+    {"*.baraag.net"}
   ],
   federated_timeline_removal: [
-    "gameliberty.club",
-    "youjo.love",
-    "hentai.baby"
+    {"gameliberty.club"},
+    {"youjo.love", "Illegal content"},
+    {"hentai.baby", "Illegal content"}
   ],
   reject: [
-    "eunomia.social",
-    "*.eunomia.social",
-    "childpawn.shop",
-    "freak.university",
-    "wintermute.fr.to",
-    "hentai.baby",
-    "youjo.love"
+    {"eunomia.social", "Privacy Concerns"},
+    {"*.eunomia.social", "Privacy Concerns"},
+    {"childpawn.shop", "Illegal content"},
+    {"freak.university", "Illegal content"},
+    {"wintermute.fr.to", "Illegal content"},
+    {"hentai.baby", "Illegal content"},
+    {"youjo.love", "Illegal content"}
   ]
 
 # Media proxy
