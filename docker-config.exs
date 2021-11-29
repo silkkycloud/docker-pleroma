@@ -22,7 +22,7 @@ config :pleroma, Pleroma.Emails.Mailer,
   relay: System.get_env("SMTP_HOST"),
   username: System.get_env("SMTP_USERNAME"),
   password: System.get_env("SMTP_PASSWORD"),
-  port: System.get_env("SMTP_PORT", 587),
+  port: System.get_env("SMTP_PORT"),
   auth: :always
 
 config :pleroma, Pleroma.Repo,
