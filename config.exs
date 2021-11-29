@@ -32,7 +32,6 @@ config :pleroma, :mrf_simple,
 
 # Media proxy
 config :pleroma, :media_proxy,
-  enabled: true,
-  base_url: "https://social.silkky.cloud"
+  enabled: true
 const :pleroma, :media_preview_proxy,
   enabled: true
