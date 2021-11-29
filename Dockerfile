@@ -10,6 +10,7 @@ ENV MIX_ENV=prod \
   
 RUN apk add --no-cache \
     ca-certificates \
+    git \
     gcc \
     g++ \
     tar \
