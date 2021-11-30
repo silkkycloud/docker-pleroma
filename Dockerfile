@@ -62,7 +62,6 @@ RUN apk --no-cache add \
     erlang \
     imagemagick \
     libmagic \
-    cmake \
     bash \
     unzip
 
