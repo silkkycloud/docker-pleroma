@@ -1,6 +1,8 @@
 # This file can be used for additional static configuration
 import Config
 
+config :pleroma, configurable_from_database: true
+
 # Welcome message
 config :pleroma, :welcome,
   email: [
