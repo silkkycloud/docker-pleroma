@@ -32,7 +32,7 @@ RUN apk add --no-cache \
 
 WORKDIR /pleroma
 
-ADD https://git.pleroma.social/pleroma/pleroma/-/archive/v${PLEROMA_VERSION}}/pleroma-v${PLEROMA_VERSION}.tar.gz /tmp/pleroma-v${PLEROMA_VERSION}.tar.gz
+ADD https://git.pleroma.social/pleroma/pleroma/-/archive/v${PLEROMA_VERSION}/pleroma-v${PLEROMA_VERSION}.tar.gz /tmp/pleroma-v${PLEROMA_VERSION}.tar.gz
 RUN tar xvfz /tmp/pleroma-v${PLEROMA_VERSION}.tar.gz -C /tmp \
     && cp -r /tmp/pleroma-v${PLEROMA_VERSION}/. /pleroma
 
