@@ -112,4 +112,4 @@ HEALTHCHECK \
     --start-period=30s \
     --interval=1m \
     --timeout=5s \
-    CMD wget --spider --q http://localhost:4000/api/v1/instance
+    CMD wget --spider --q http://localhost:4000/api/v1/instance || exit 1
