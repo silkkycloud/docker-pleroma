@@ -1,7 +1,11 @@
+ARG PLEROMA_VERSION=2.4.1
+
 ####################################################################################################
 ## Builder
 ####################################################################################################
 FROM elixir:1.12-alpine AS builder
+
+ARG PLEROMA_VERSION
 
 ENV MIX_ENV=prod \
     LC_ALL=C.UTF-8 \
@@ -28,9 +32,9 @@ RUN apk add --no-cache \
 
 WORKDIR /pleroma
 
-ADD https://git.pleroma.social/pleroma/pleroma/-/archive/v2.4.1/pleroma-v2.4.1.tar.gz /tmp/pleroma-v2.4.1.tar.gz
-RUN tar xvfz /tmp/pleroma-v2.4.1.tar.gz -C /tmp \
-    && cp -r /tmp/pleroma-v2.4.1/. /pleroma
+ADD https://git.pleroma.social/pleroma/pleroma/-/archive/v${PLEROMA_VERSION}}/pleroma-v${PLEROMA_VERSION}.tar.gz /tmp/pleroma-v${PLEROMA_VERSION}.tar.gz
+RUN tar xvfz /tmp/pleroma-v${PLEROMA_VERSION}.tar.gz -C /tmp \
+    && cp -r /tmp/pleroma-v${PLEROMA_VERSION}/. /pleroma
 
 # Build Pleroma
 RUN echo "import Mix.Config" > config/prod.secret.exs \
