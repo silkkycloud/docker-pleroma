@@ -28,9 +28,9 @@ RUN apk add --no-cache \
 
 WORKDIR /pleroma
 
-ADD https://git.pleroma.social/pleroma/pleroma/-/archive/stable/pleroma-stable.tar.gz /tmp/pleroma-stable.tar.gz
-RUN tar xvfz /tmp/pleroma-stable.tar.gz -C /tmp \
-    && cp -r /tmp/pleroma-stable/. /pleroma
+ADD https://git.pleroma.social/pleroma/pleroma/-/archive/v2.4.1/pleroma-v2.4.1.tar.gz /tmp/pleroma-v2.4.1.tar.gz
+RUN tar xvfz /tmp/pleroma-v2.4.1.tar.gz -C /tmp \
+    && cp -r /tmp/pleroma-v2.4.1/. /pleroma
 
 # Build Pleroma
 RUN echo "import Mix.Config" > config/prod.secret.exs \
