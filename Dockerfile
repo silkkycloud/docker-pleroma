@@ -1,4 +1,5 @@
 ARG PLEROMA_VERSION=2.4.1
+ARG HARDENED_MALLOC_VERSION=8
 
 ####################################################################################################
 ## Builder of Hardened Malloc
