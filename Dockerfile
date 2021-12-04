@@ -49,6 +49,7 @@ RUN echo "import Mix.Config" > config/prod.secret.exs \
 ####################################################################################################
 FROM alpine:3.15
 
+ARG PLEROMA_VERSION
 ARG DATA=/var/lib/pleroma
 
 ENV MIX_ENV=prod \
@@ -117,3 +118,12 @@ HEALTHCHECK \
     --interval=1m \
     --timeout=5s \
     CMD wget --spider --q http://localhost:4000/api/v1/instance || exit 1
+
+# Image metadata
+LABEL org.opencontainers.image.version=${PLEROMA_VERSION}
+LABEL org.opencontainers.image.title=Pleroma
+LABEL org.opencontainers.image.description="Pleroma is a Twitter-style microblogging server that federates (= exchange messages with) with other servers like Mastodon. So you can stay in control of your online identity, but still talk with people on larger servers."
+LABEL org.opencontainers.image.url=https://social.silkky.cloud
+LABEL org.opencontainers.image.vendor="Silkky.Cloud"
+LABEL org.opencontainers.image.licenses=Unlicense
+LABEL org.opencontainers.image.source="https://github.com/silkkycloud/docker-pleroma"
