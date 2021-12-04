@@ -1,16 +1,25 @@
 ARG PLEROMA_VERSION=2.4.1
 
 ####################################################################################################
+## Builder of Hardened Malloc
+####################################################################################################
+FROM alpine:3.15 as build-malloc
+
+ARG HARDENED_MALLOC_VERSION
+ARG CONFIG_NATIVE=false
+
+RUN apk --no-cache add build-base git gnupg && cd /tmp \
+ && wget -q https://github.com/thestinger.gpg && gpg --import thestinger.gpg \
+ && git clone --depth 1 --branch ${HARDENED_MALLOC_VERSION} https://github.com/GrapheneOS/hardened_malloc \
+ && cd hardened_malloc && git verify-tag $(git describe --tags) \
+ && make CONFIG_NATIVE=${CONFIG_NATIVE}
+
+####################################################################################################
 ## Builder
 ####################################################################################################
 FROM elixir:1.12-alpine AS builder
 
 ARG PLEROMA_VERSION
-
-ENV MIX_ENV=prod \
-    LC_ALL=C.UTF-8 \
-    LANG=C.UTF-8 \
-    PLEROMA_CONFIG_PATH=/etc/pleroma/config.exs
   
 RUN apk add --no-cache \
     ca-certificates \
@@ -36,6 +45,14 @@ ADD https://git.pleroma.social/pleroma/pleroma/-/archive/v${PLEROMA_VERSION}/ple
 RUN tar xvfz /tmp/pleroma-v${PLEROMA_VERSION}.tar.gz -C /tmp \
     && cp -r /tmp/pleroma-v${PLEROMA_VERSION}/. /pleroma
 
+ENV MIX_ENV=prod \
+    LC_ALL=C.UTF-8 \
+    LANG=C.UTF-8 \
+    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so" \
+    PLEROMA_CONFIG_PATH=/etc/pleroma/config.exs
+
+COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
+
 # Build Pleroma
 RUN echo "import Mix.Config" > config/prod.secret.exs \
     && mix local.hex --force \
@@ -52,11 +69,6 @@ FROM alpine:3.15
 ARG PLEROMA_VERSION
 ARG DATA=/var/lib/pleroma
 
-ENV MIX_ENV=prod \
-    LC_ALL=C.UTF-8 \
-    LANG=C.UTF-8 \
-    PLEROMA_CONFIG_PATH=/etc/pleroma/config.exs 
-
 RUN apk --no-cache add \
     ca-certificates \
     tini \
@@ -72,6 +84,13 @@ RUN apk --no-cache add \
 
 WORKDIR /pleroma
 
+ENV MIX_ENV=prod \
+    LC_ALL=C.UTF-8 \
+    LANG=C.UTF-8 \
+    LD_PRELOAD="/usr/local/lib/libhardened_malloc.so" \
+    PLEROMA_CONFIG_PATH=/etc/pleroma/config.exs
+
+COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
 COPY --from=builder /pleroma /pleroma
 
 # Create persistent data directories
