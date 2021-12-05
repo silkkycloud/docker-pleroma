@@ -9,7 +9,7 @@ FROM alpine:3.15 as build-malloc
 ARG HARDENED_MALLOC_VERSION
 ARG CONFIG_NATIVE=false
 
-RUN apk --no-cache add build-base git gnupg && cd /tmp \
+RUN apk --no-cache add build-base git gnupg libg++ libgcc++ && cd /tmp \
  && wget -q https://github.com/thestinger.gpg && gpg --import thestinger.gpg \
  && git clone --depth 1 --branch ${HARDENED_MALLOC_VERSION} https://github.com/GrapheneOS/hardened_malloc \
  && cd hardened_malloc && git verify-tag $(git describe --tags) \
@@ -28,6 +28,8 @@ RUN apk add --no-cache \
     gcc \
     g++ \
     tar \
+    libgcc++ \
+    libg++ \
     curl \
     musl-dev \
     make \ 
@@ -77,6 +79,8 @@ RUN apk --no-cache add \
     postgresql-client \
     exiftool \
     elixir \
+    libgcc++ \
+    libg++ \
     erlang \
     imagemagick \
     libmagic \
