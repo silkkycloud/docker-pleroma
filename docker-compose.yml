@@ -24,6 +24,15 @@ services:
         reservations:
           cpus: '0.2'
           memory: 512M
+      labels:
+        - "traefik.enable=true"
+        # Router
+        - "traefik.http.routers.pleroma.rule=Host(`${HOSTNAME}`)"
+        - "traefik.http.routers.pleroma.entrypoints=websecure"
+        - "traefik.http.routers.pleroma.tls=true"
+        - "traefik.http.routers.pleroma.service=pleroma-service"
+        # Service
+        - "traefik.http.services.pleroma-service.loadbalancer.server.port=4000"
     volumes:
       - uploads:/var/lib/pleroma/uploads
     environment:
@@ -38,7 +47,7 @@ services:
       - SMTP_USERNAME=${MAIL_USERNAME}
       - SMTP_PASSWORD=${MAIL_PASSWORD}
       # General
-      - DOMAIN=${PLEROMA_HOSTNAME}
+      - DOMAIN=${HOSTNAME}
       - INSTANCE_NAME=${INSTANCE_NAME}
       - INSTANCE_DESCRIPTION=${INSTANCE_DESCRIPTION}
       - ADMIN_EMAIL=${ADMIN_EMAIL}
