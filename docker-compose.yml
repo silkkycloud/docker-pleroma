@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   server:
-    image: ghcr.io/silkkycloud/pleroma:latest
+    image: ghcr.io/silkkycloud/pleroma:2.4.1
     hostname: pleroma
     networks:
       - public
