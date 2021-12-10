@@ -13,7 +13,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - "node.hostname == main-1"
+          - "node.hostname == main.web01.hel.hcloud.silkky.cloud"
       update_config:
         failure_action: rollback
         order: start-first
@@ -63,7 +63,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - "node.hostname == main-1"
+          - "node.hostname == main.web01.hel.hcloud.silkky.cloud"
       resources:
         limits:
           cpus: '1'
