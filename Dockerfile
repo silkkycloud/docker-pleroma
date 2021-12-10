@@ -1,6 +1,5 @@
-ARG PLEROMA_VERSION=2.4.1
 ARG HARDENED_MALLOC_VERSION=8
-
+ARG PLEROMA_VERSION=develop
 ####################################################################################################
 ## Builder of Hardened Malloc
 ####################################################################################################
@@ -44,9 +43,9 @@ RUN apk add --no-cache \
 
 WORKDIR /pleroma
 
-ADD https://git.pleroma.social/pleroma/pleroma/-/archive/v${PLEROMA_VERSION}/pleroma-v${PLEROMA_VERSION}.tar.gz /tmp/pleroma-v${PLEROMA_VERSION}.tar.gz
-RUN tar xvfz /tmp/pleroma-v${PLEROMA_VERSION}.tar.gz -C /tmp \
-    && cp -r /tmp/pleroma-v${PLEROMA_VERSION}/. /pleroma
+ADD https://git.pleroma.social/pleroma/pleroma/-/archive/${PLEROMA_VERSION}/pleroma-${PLEROMA_VERSION}.tar.gz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz
+RUN tar xvfz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz -C /tmp \
+    && cp -r /tmp/pleroma-${PLEROMA_VERSION}/. /pleroma
 
 ENV MIX_ENV=prod \
     LC_ALL=C.UTF-8 \
@@ -124,11 +123,9 @@ RUN adduser --disabled-password --gecos "" --no-create-home pleroma \
     && chown -R pleroma:pleroma /etc/pleroma \
     && chown -R pleroma:pleroma ${DATA}
 
-ENTRYPOINT ["/sbin/tini", "--"]
+ENTRYPOINT ["/sbin/tini", "--", "/pleroma/run-pleroma.sh"]
 
 USER pleroma
-
-CMD ["/pleroma/run-pleroma.sh"]
 
 # VOLUME /var/lib/pleroma/static
 VOLUME /var/lib/pleroma/uploads
