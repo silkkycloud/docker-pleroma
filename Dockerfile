@@ -121,7 +121,10 @@ RUN chmod +x /pleroma/run-pleroma.sh
 RUN adduser --disabled-password --gecos "" --no-create-home pleroma \
     && chown -R pleroma:pleroma /pleroma \
     && chown -R pleroma:pleroma /etc/pleroma \
-    && chown -R pleroma:pleroma ${DATA}
+    && chown -R pleroma:pleroma ${DATA} \
+    && chmod 777 -R /pleroma \
+    && chmod 777 -R /etc/pleroma \
+    && chmod 777 -R ${DATA}
 
 ENTRYPOINT ["/sbin/tini", "--", "/pleroma/run-pleroma.sh"]
 
