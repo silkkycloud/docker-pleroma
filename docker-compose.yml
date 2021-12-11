@@ -73,7 +73,6 @@ services:
           memory: 512M
     volumes:
       - database:/var/lib/postgresql/data
-      - /etc/localtime:/etc/localtime:ro
     environment:
       - POSTGRES_DB=pleroma
       - POSTGRES_USER=pleroma
