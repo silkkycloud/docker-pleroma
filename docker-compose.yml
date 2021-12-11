@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   server:
-    image: ghcr.io/silkkycloud/pleroma:2.4.1
+    image: ghcr.io/silkkycloud/pleroma:latest
     hostname: pleroma
     networks:
       - public
@@ -35,6 +35,7 @@ services:
         - "traefik.http.services.pleroma-service.loadbalancer.server.port=4000"
     volumes:
       - uploads:/var/lib/pleroma/uploads
+      - config:/etc/pleroma/config.exs
     environment:
       # Database
       - POSTGRES_HOST=postgresql
