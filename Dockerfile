@@ -109,19 +109,19 @@ RUN unzip -o /tmp/soapbox-fe.zip -d /var/lib/pleroma \
 
 COPY ./Soapbox/. /var/lib/pleroma/static
 
+# Secrets can't be in the docker image, so this config generates them at runtime.
+COPY ./docker-config.exs /etc/pleroma/config.exs
+# This config will be imported
+COPY ./config.exs /var/lib/pleroma/config.exs
+
 COPY ./run-pleroma.sh /pleroma/run-pleroma.sh
-COPY ./gen-config.sh /pleroma/gen-config.sh
 RUN chmod +x /pleroma/run-pleroma.sh
-RUN chmod +x /pleroma/gen-config.sh
 
 # Add an unprivileged user and set directory permissions
 RUN adduser --disabled-password --gecos "" --no-create-home pleroma \
     && chown -R pleroma:pleroma /pleroma \
     && chown -R pleroma:pleroma /etc/pleroma \
-    && chown -R pleroma:pleroma ${DATA} \
-    && chmod 777 -R /pleroma \
-    && chmod 777 -R /etc/pleroma \
-    && chmod 777 -R ${DATA}
+    && chown -R pleroma:pleroma ${DATA}
 
 ENTRYPOINT ["/sbin/tini", "--", "/pleroma/run-pleroma.sh"]
 
