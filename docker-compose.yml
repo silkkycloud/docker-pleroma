@@ -35,6 +35,11 @@ services:
         - "traefik.http.services.pleroma-service.loadbalancer.server.port=4000"
     volumes:
       - uploads:/var/lib/pleroma/uploads
+    configs:
+      - source: dynamic-config
+        target: /var/lib/pleroma/config.exs
+        uid: "1000"
+        gid: "1000"
     environment:
       # Database
       - POSTGRES_HOST=postgresql
@@ -92,3 +97,7 @@ networks:
 volumes:
   database:
   uploads:
+
+configs:
+  dynamic-config:
+    file: ./config.exs
