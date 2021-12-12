@@ -1,5 +1,6 @@
 ARG HARDENED_MALLOC_VERSION=8
-ARG PLEROMA_VERSION=develop # you can use stable branch as well, if you don't like develop one
+ARG PLEROMA_VERSION=develop 
+# you can use stable branch as well, if you don't like develop one
 
 ####################################################################################################
 ## Builder of Hardened Malloc
