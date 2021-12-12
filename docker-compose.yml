@@ -35,6 +35,8 @@ services:
         - "traefik.http.services.pleroma-service.loadbalancer.server.port=4000"
     volumes:
       - uploads:/var/lib/pleroma/uploads
+      - static:/var/lib/pleroma/static
+      - config:/etc/pleroma/
     environment:
       # Database
       - POSTGRES_HOST=postgresql
@@ -92,3 +94,5 @@ networks:
 volumes:
   database:
   uploads:
+  static:
+  config:
