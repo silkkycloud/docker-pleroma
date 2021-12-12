@@ -97,6 +97,8 @@ networks:
 volumes:
   database:
   uploads:
+  static:
+  config:
 
 configs:
   dynamic-config:

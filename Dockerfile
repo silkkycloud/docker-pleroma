@@ -1,5 +1,7 @@
 ARG HARDENED_MALLOC_VERSION=8
-ARG PLEROMA_VERSION=develop
+ARG PLEROMA_VERSION=develop 
+# you can use stable branch as well, if you don't like develop one
+
 ####################################################################################################
 ## Builder of Hardened Malloc
 ####################################################################################################
@@ -54,6 +56,7 @@ ENV MIX_ENV=prod \
     PLEROMA_CONFIG_PATH=/etc/pleroma/config.exs
 
 COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
+RUN update-ca-certificates
 
 # Build Pleroma
 RUN echo "import Mix.Config" > config/prod.secret.exs \
@@ -96,6 +99,7 @@ ENV MIX_ENV=prod \
 
 COPY --from=build-malloc /tmp/hardened_malloc/libhardened_malloc.so /usr/local/lib/
 COPY --from=builder /pleroma /pleroma
+RUN update-ca-certificates
 
 # Create persistent data directories
 RUN mkdir -p /etc/pleroma \
