@@ -38,7 +38,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/silkkycloud/pleroma:latest
+          tags: ghcr.io/silkkycloud/pleroma:latest,ghcr.io/silkkycloud/pleroma:2.4.2
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
       - name: Move Cache

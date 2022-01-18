@@ -33,7 +33,7 @@ RUN apk add --no-cache \
     libstdc++ \
     curl \
     musl-dev \
-    make \ 
+    make \
     cmake \
     file-dev \
     file \
