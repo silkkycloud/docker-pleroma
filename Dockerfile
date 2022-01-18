@@ -1,5 +1,5 @@
 ARG HARDENED_MALLOC_VERSION=9
-ARG PLEROMA_VERSION=develop 
+ARG PLEROMA_VERSION=2.4.2
 # you can use stable branch as well, if you don't like develop one
 
 ####################################################################################################
@@ -45,9 +45,9 @@ RUN apk add --no-cache \
 
 WORKDIR /pleroma
 
-ADD https://git.pleroma.social/pleroma/pleroma/-/archive/${PLEROMA_VERSION}/pleroma-${PLEROMA_VERSION}.tar.gz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz
-RUN tar xvfz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz -C /tmp \
-    && cp -r /tmp/pleroma-${PLEROMA_VERSION}/. /pleroma
+ADD https://git.pleroma.social/pleroma/pleroma/-/archive/v${PLEROMA_VERSION}/pleroma-v${PLEROMA_VERSION}.tar.gz /tmp/pleroma-v${PLEROMA_VERSION}.tar.gz
+RUN tar xvfz /tmp/pleroma-v${PLEROMA_VERSION}.tar.gz -C /tmp \
+    && cp -r /tmp/pleroma-v${PLEROMA_VERSION}/. /pleroma
 
 ENV MIX_ENV=prod \
     LC_ALL=C.UTF-8 \
