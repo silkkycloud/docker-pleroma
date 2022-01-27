@@ -1,5 +1,5 @@
 ARG HARDENED_MALLOC_VERSION=9
-ARG PLEROMA_VERSION=2.4.2
+ARG PLEROMA_VERSION=develop
 # you can use stable branch as well, if you don't like develop one
 
 ####################################################################################################
