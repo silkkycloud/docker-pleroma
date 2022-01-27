@@ -30,7 +30,10 @@ services:
         - "traefik.http.routers.pleroma.rule=Host(`${HOSTNAME}`)"
         - "traefik.http.routers.pleroma.entrypoints=websecure"
         - "traefik.http.routers.pleroma.tls=true"
+        - "traefik.http.routers.pleroma.middlewares=pleroma-headers"
         - "traefik.http.routers.pleroma.service=pleroma-service"
+        # Middleware
+        - "traefik.http.middlwares.pleroma-headers.headers.framedeny=true"
         # Service
         - "traefik.http.services.pleroma-service.loadbalancer.server.port=4000"
     volumes:
