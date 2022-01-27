@@ -19,7 +19,7 @@ RUN apk --no-cache add build-base git gnupg libgcc libstdc++ && cd /tmp \
 ####################################################################################################
 ## Builder
 ####################################################################################################
-FROM elixir:1.12-alpine AS builder
+FROM elixir:1.13-alpine AS builder
 
 ARG PLEROMA_VERSION
   
@@ -45,9 +45,9 @@ RUN apk add --no-cache \
 
 WORKDIR /pleroma
 
-ADD https://git.pleroma.social/pleroma/pleroma/-/archive/v${PLEROMA_VERSION}/pleroma-v${PLEROMA_VERSION}.tar.gz /tmp/pleroma-v${PLEROMA_VERSION}.tar.gz
-RUN tar xvfz /tmp/pleroma-v${PLEROMA_VERSION}.tar.gz -C /tmp \
-    && cp -r /tmp/pleroma-v${PLEROMA_VERSION}/. /pleroma
+ADD https://git.pleroma.social/pleroma/pleroma/-/archive/${PLEROMA_VERSION}/pleroma-${PLEROMA_VERSION}.tar.gz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz
+RUN tar xvfz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz -C /tmp \
+    && cp -r /tmp/pleroma-${PLEROMA_VERSION}/. /pleroma
 
 ENV MIX_ENV=prod \
     LC_ALL=C.UTF-8 \
