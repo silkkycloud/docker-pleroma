@@ -54,8 +54,8 @@ WORKDIR /pleroma
 #RUN tar xvfz /tmp/pleroma-f5d4ef50.tar.gz -C /tmp \
 #    && cp -r /tmp/pleroma-f5d4ef50/. /pleroma
 
-ADD https://gitlab.com/soapbox-pub/soapbox/-/archive/develop/soapbox-develop.tar.bz2 /tmp/soapbox-develop.tar.bz2
-RUN tar xvfz /tmp/soapbox-develop.tar.bz2 -C /tmp \
+ADD https://gitlab.com/soapbox-pub/soapbox/-/archive/develop/soapbox-develop.tar.gz /tmp/soapbox-develop.tar.gz
+RUN tar xvfz /tmp/soapbox-develop.tar.gz -C /tmp \
     && cp -r /tmp/soapbox-develop/. /pleroma
 
 ENV MIX_ENV=prod \
