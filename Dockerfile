@@ -50,9 +50,13 @@ WORKDIR /pleroma
 #RUN tar xvfz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz -C /tmp \
 #    && cp -r /tmp/pleroma-${PLEROMA_VERSION}/. /pleroma
 
-ADD https://git.pleroma.social/pleroma/pleroma/-/archive/f5d4ef50/pleroma-f5d4ef50.tar.gz /tmp/pleroma-f5d4ef50.tar.gz
-RUN tar xvfz /tmp/pleroma-f5d4ef50.tar.gz -C /tmp \
-    && cp -r /tmp/pleroma-f5d4ef50/. /pleroma
+#ADD https://git.pleroma.social/pleroma/pleroma/-/archive/f5d4ef50/pleroma-f5d4ef50.tar.gz /tmp/pleroma-f5d4ef50.tar.gz
+#RUN tar xvfz /tmp/pleroma-f5d4ef50.tar.gz -C /tmp \
+#    && cp -r /tmp/pleroma-f5d4ef50/. /pleroma
+
+ADD https://gitlab.com/soapbox-pub/soapbox/-/archive/develop/soapbox-develop.tar.bz2 /tmp/soapbox-develop.tar.bz2
+RUN tar xvfz /tmp/soapbox-develop.tar.bz2 -C /tmp \
+    && cp -r /tmp/soapbox-develop/. /pleroma
 
 ENV MIX_ENV=prod \
     LC_ALL=C.UTF-8 \
