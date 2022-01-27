@@ -19,7 +19,7 @@ RUN apk --no-cache add build-base git gnupg libgcc libstdc++ && cd /tmp \
 ####################################################################################################
 ## Builder
 ####################################################################################################
-FROM elixir:1.13-alpine AS builder
+FROM elixir:1.11-alpine AS builder
 
 ARG PLEROMA_VERSION
   
