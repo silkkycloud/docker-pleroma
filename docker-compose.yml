@@ -33,7 +33,7 @@ services:
         - "traefik.http.routers.pleroma.middlewares=pleroma-headers"
         - "traefik.http.routers.pleroma.service=pleroma-service"
         # Middleware
-        - "traefik.http.middlwares.pleroma-headers.headers.framedeny=true"
+        - "traefik.http.middlewares.pleroma-headers.headers.framedeny=true"
         # Service
         - "traefik.http.services.pleroma-service.loadbalancer.server.port=4000"
     volumes:
