@@ -1,6 +1,6 @@
 ARG HARDENED_MALLOC_VERSION=9
 ARG PLEROMA_VERSION=develop
-ARG ERLANG_OTP_VERSION=24.2.1
+ARG ERLANG_OTP_VERSION=24.3
 ARG ELIXIR_VERSION=1.13.3
 ARG ALPINE_VERSION=3.15.0
 
@@ -48,8 +48,11 @@ RUN apk add --no-cache \
     ffmpeg
 
 WORKDIR /pleroma
-
-ADD https://git.pleroma.social/pleroma/pleroma/-/archive/${PLEROMA_VERSION}/pleroma-${PLEROMA_VERSION}.tar.gz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz
+# I am sorry Pleroma. 
+# For now I will use Soapbox, just to see how it works.
+# If it will work pretty good, then I will keep it
+#ADD https://git.pleroma.social/pleroma/pleroma/-/archive/${PLEROMA_VERSION}/pleroma-${PLEROMA_VERSION}.tar.gz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz
+ADD https://gitlab.com/soapbox-pub/soapbox-be/-/archive/develop/soapbox-be-${PLEROMA_VERSION}.tar.gz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz
 RUN tar xvfz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz -C /tmp \
     && cp -r /tmp/pleroma-${PLEROMA_VERSION}/. /pleroma
 
