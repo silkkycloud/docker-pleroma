@@ -54,7 +54,7 @@ WORKDIR /pleroma
 #ADD https://git.pleroma.social/pleroma/pleroma/-/archive/${PLEROMA_VERSION}/pleroma-${PLEROMA_VERSION}.tar.gz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz
 #RUN tar xvfz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz -C /tmp \
 #    && cp -r /tmp/pleroma-${PLEROMA_VERSION}/. /pleroma
-ADD https://gitlab.com/soapbox-pub/soapbox-be/-/archive/develop/soapbox-be-${PLEROMA_VERSION}.tar.gz /tmp/soapbox-be-${PLEROMA_VERSION}.tar.gz
+ADD https://gitlab.com/soapbox-pub/soapbox-be/-/archive/${PLEROMA_VERSION}/soapbox-be-${PLEROMA_VERSION}.tar.gz /tmp/soapbox-be-${PLEROMA_VERSION}.tar.gz
 RUN tar xvfz /tmp/soapbox-be-${PLEROMA_VERSION}.tar.gz -C /tmp \
     && cp -r /tmp/soapbox-be-${PLEROMA_VERSION}/. /pleroma
 
