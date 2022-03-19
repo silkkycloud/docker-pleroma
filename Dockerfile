@@ -1,5 +1,9 @@
 ARG HARDENED_MALLOC_VERSION=9
-ARG PLEROMA_VERSION=stable
+ARG PLEROMA_VERSION=develop
+ARG ERLANG_OTP_VERSION=24.3
+ARG ELIXIR_VERSION=1.13.3
+ARG ALPINE_VERSION=3.15.0
+
 # you can use stable branch as well, if you don't like develop one
 
 ####################################################################################################
@@ -19,7 +23,7 @@ RUN apk --no-cache add build-base git gnupg libgcc libstdc++ && cd /tmp \
 ####################################################################################################
 ## Builder
 ####################################################################################################
-FROM elixir:1.13-alpine AS builder
+FROM hexpm/elixir:${ELIXIR_VERSION}-erlang-${ERLANG_OTP_VERSION}-alpine-${ALPINE_VERSION} as builder
 
 ARG PLEROMA_VERSION
   
@@ -44,19 +48,15 @@ RUN apk add --no-cache \
     ffmpeg
 
 WORKDIR /pleroma
-
-#Currently, pinning the Pleroma version.
-#ADD https://git.pleroma.social/pleroma/pleroma/-/archive/${PLEROMA_VERSION}/pleroma-${PLEROMA_VERSION}.tar.gz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz
-#RUN tar xvfz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz -C /tmp \
-#    && cp -r /tmp/pleroma-${PLEROMA_VERSION}/. /pleroma
-
-#ADD https://git.pleroma.social/pleroma/pleroma/-/archive/f5d4ef50/pleroma-f5d4ef50.tar.gz /tmp/pleroma-f5d4ef50.tar.gz
-#RUN tar xvfz /tmp/pleroma-f5d4ef50.tar.gz -C /tmp \
-#    && cp -r /tmp/pleroma-f5d4ef50/. /pleroma
-
-ADD https://gitlab.com/soapbox-pub/soapbox/-/archive/develop/soapbox-develop.tar.gz /tmp/soapbox-develop.tar.gz
-RUN tar xvfz /tmp/soapbox-develop.tar.gz -C /tmp \
-    && cp -r /tmp/soapbox-develop/. /pleroma
+# I am sorry Pleroma. 
+# For now I will use Soapbox, just to see how it works.
+# If it will work pretty good, then I will keep it
+ADD https://git.pleroma.social/pleroma/pleroma/-/archive/${PLEROMA_VERSION}/pleroma-${PLEROMA_VERSION}.tar.gz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz
+RUN tar xvfz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz -C /tmp \
+    && cp -r /tmp/pleroma-${PLEROMA_VERSION}/. /pleroma
+#ADD https://gitlab.com/soapbox-pub/soapbox-be/-/archive/${PLEROMA_VERSION}/soapbox-be-${PLEROMA_VERSION}.tar.gz /tmp/soapbox-be-${PLEROMA_VERSION}.tar.gz
+#RUN tar xvfz /tmp/soapbox-be-${PLEROMA_VERSION}.tar.gz -C /tmp \
+#    && cp -r /tmp/soapbox-be-${PLEROMA_VERSION}/. /pleroma
 
 ENV MIX_ENV=prod \
     LC_ALL=C.UTF-8 \
