@@ -51,12 +51,12 @@ WORKDIR /pleroma
 # I am sorry Pleroma. 
 # For now I will use Soapbox, just to see how it works.
 # If it will work pretty good, then I will keep it
-ADD https://git.pleroma.social/pleroma/pleroma/-/archive/${PLEROMA_VERSION}/pleroma-${PLEROMA_VERSION}.tar.gz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz
-RUN tar xvfz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz -C /tmp \
-    && cp -r /tmp/pleroma-${PLEROMA_VERSION}/. /pleroma
-#ADD https://gitlab.com/soapbox-pub/soapbox-be/-/archive/${PLEROMA_VERSION}/soapbox-be-${PLEROMA_VERSION}.tar.gz /tmp/soapbox-be-${PLEROMA_VERSION}.tar.gz
-#RUN tar xvfz /tmp/soapbox-be-${PLEROMA_VERSION}.tar.gz -C /tmp \
-#    && cp -r /tmp/soapbox-be-${PLEROMA_VERSION}/. /pleroma
+#ADD https://git.pleroma.social/pleroma/pleroma/-/archive/${PLEROMA_VERSION}/pleroma-${PLEROMA_VERSION}.tar.gz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz
+#RUN tar xvfz /tmp/pleroma-${PLEROMA_VERSION}.tar.gz -C /tmp \
+#    && cp -r /tmp/pleroma-${PLEROMA_VERSION}/. /pleroma
+ADD https://gitlab.com/soapbox-pub/soapbox-be/-/archive/${PLEROMA_VERSION}/soapbox-be-${PLEROMA_VERSION}.tar.gz /tmp/soapbox-be-${PLEROMA_VERSION}.tar.gz
+RUN tar xvfz /tmp/soapbox-be-${PLEROMA_VERSION}.tar.gz -C /tmp \
+    && cp -r /tmp/soapbox-be-${PLEROMA_VERSION}/. /pleroma
 
 ENV MIX_ENV=prod \
     LC_ALL=C.UTF-8 \
