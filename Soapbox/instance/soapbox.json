@@ -1,61 +1,9 @@
 {
-  "cryptoAddresses": [
-    {
-      "address": "bc1qr5hpr3mxpj0cpqcrmzcpquhjagt9ppy7d9xdpt",
-      "note": "",
-      "ticker": "BTC"
-    },
-    {
-      "address": "0x9fC5FB92482D9341738A554ce832277B705A2673",
-      "note": "",
-      "ticker": "ETH"
-    },
-    {
-      "address": "84LgDjq3rJx9iZXMq14VtvNnjrtws4SYZUoSd6PoRFPiFc2YdbR5FdbeVHGxvsM6nGX4vbHAcWYeqiKPUKuXyjmWJJ96FVj",
-      "note": "",
-      "ticker": "XMR"
-    }
-  ],
   "defaultSettings": {
     "autoPlayGif": true,
     "themeMode": "dark"
   },
-  "copyright": "❤️Silkky.Cloud",
-  "logo": "/instance/images/logo_pure_text.svg",
+  "copyright": "Shutting down, export data.",
   "greentext": true,
-  "cryptoDonatePanel": {
-    "limit": 3
-  },
-  "promoPanel": {
-    "items": [
-      {
-        "icon": "heart",
-        "text": "Donate",
-        "url": "https://www.silkky.cloud/contribute"
-      },
-      {
-        "icon": "power-off",
-        "text": "Our status page",
-        "url": "https://status.silkky.cloud"
-      }
-    ]
-  },
-  "navlinks": {
-    "homeFooter": [
-      {
-        "title": "About",
-        "url": "/about"
-      },
-      {
-        "title": "Terms of Service",
-        "url": "/about/tos"
-      },
-      {
-        "title": "Privacy Policy",
-        "url": "/about/privacy"
-      }
-    ]
-  },
-  "authenticatedProfile": false,
-  "brandColor": "#3D8091"
+  "brandColor": "#000000"
 }
